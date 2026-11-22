@@ -1,0 +1,20 @@
+---
+description: Retrieve and apply an avatar stance before answering any user request.
+alwaysApply: true
+---
+
+# Avatar stances
+
+Before answering a user question or task, follow `.cursor/skills/use-avatar-stance/SKILL.md`.
+
+Use the `avatar-stances` MCP tools. Compare triggers **by meaning**, not by shared words: a trigger matches when the request is about what it describes, in any words; a shared word with a different meaning does not count. The avatar with the most strongly related triggers wins.
+
+1. `list_avatars` — generics only. Pick the generic whose triggers relate most strongly to the request.
+2. `list_child_avatars` with that generic `parentId`. Compare the children's triggers the same way.
+3. `get_avatar` with the child id if one relates. If no child relates but the request names an uncovered specialty, `create_avatar` with `parentId` set to the generic, then `get_avatar` the new child. If the request is plain generic, `get_avatar` the generic.
+4. If the payload is a child, answer from **`applied`** (generic cares/ignores/lens/voice/needs **plus** the child’s). Do not drop the parent. **On any conflict between generic and child, the child wins** (`applied.overrides` lists the parent items already dropped).
+5. **Needs:** if a fact in `applied.needs` that matters is missing, ask one short question first and do not guess (safety step first in emergencies).
+6. **Format:** shape the answer the way `applied.format` says.
+7. If no generic matches, `create_avatar` (with needs and format) from this request and answer as it in the same turn.
+
+Do not flatten children into extra generics. Do not run Node scripts or curl the UI API to fetch avatars.

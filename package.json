@@ -1,0 +1,24 @@
+{
+  "name": "avatar-stances",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "db:init": "node scripts/init-db.mjs",
+    "db:reset": "node scripts/init-db.mjs --reset",
+    "db:sync": "node scripts/init-db.mjs --add-missing",
+    "db:check": "node scripts/check-seed.mjs",
+    "mcp": "node mcp/server.mjs",
+    "mcp:check": "node mcp/self-check.mjs",
+    "mcp:scenarios": "node mcp/scenario-check.mjs",
+    "mcp:children": "node mcp/child-answer-check.mjs",
+    "mcp:conflict": "node mcp/conflict-check.mjs",
+    "mcp:routes": "node mcp/route-check.mjs",
+    "mcp:meaning": "node mcp/meaning-check.mjs",
+    "start": "node scripts/init-db.mjs && node server/index.mjs",
+    "dev": "node scripts/init-db.mjs && node server/index.mjs"
+  }
+}
